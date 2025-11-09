@@ -10,11 +10,12 @@ class Trilha(models.Model):
     nome_da_trilha = models.CharField(max_length=300, verbose_name="Nome da Trilha")
     distancia_da_trilha = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Distância (km)")
     parque = models.ForeignKey(
-        'Parque',
+        'parques.Parque',   # <- nome do app + nome da classe
         on_delete=models.CASCADE,
         related_name='trilhas',
         verbose_name="Parque"
     )
+
     tempo_de_duracao = models.DurationField(
         help_text="Duração da atividade (ex: 1:30:00 = 1h30min)",
         verbose_name="Tempo de Duração"

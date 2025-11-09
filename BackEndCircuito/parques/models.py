@@ -82,9 +82,9 @@ class Parque(models.Model):
     descricao = models.TextField(blank=True, null=True)
     site = models.URLField(blank=True, null=True)
     endereco = models.OneToOneField(
-        Endereco,
+        'Endereco',
         on_delete=models.CASCADE,
-        related_name="parque"
+        related_name='parque'
     )
 
     class Meta:

@@ -1,16 +1,8 @@
 from django.contrib import admin
-
-# Register your models here.
-from django.contrib import admin
-from .models import Endereco, HorarioFuncionamento, Parque, Trilha
+from .models import Endereco, HorarioFuncionamento, Parque
 
 
-class EnderecoInline(admin.StackedInline):
-    model = Endereco
-    extra = 0
-    can_delete = False
-
-
+# Exibição de horários diretamente dentro do parque
 class HorarioFuncionamentoInline(admin.TabularInline):
     model = HorarioFuncionamento
     extra = 1
@@ -18,9 +10,16 @@ class HorarioFuncionamentoInline(admin.TabularInline):
 
 @admin.register(Parque)
 class ParqueAdmin(admin.ModelAdmin):
-    list_display = ("nomeDoParque", "descricao", "site")
-    search_fields = ("nomeDoParque", "descricao")
-    inlines = [EnderecoInline, HorarioFuncionamentoInline]
+    list_display = ("nome_do_parque", "descricao", "site", "get_endereco_resumido")
+    search_fields = ("nome_do_parque", "descricao")
+    inlines = [HorarioFuncionamentoInline]
+
+    def get_endereco_resumido(self, obj):
+        """Exibe o endereço de forma resumida na lista."""
+        if obj.endereco:
+            return f"{obj.endereco.cidade}/{obj.endereco.estado}"
+        return "-"
+    get_endereco_resumido.short_description = "Endereço"
 
 
 @admin.register(Endereco)
@@ -35,5 +34,3 @@ class HorarioFuncionamentoAdmin(admin.ModelAdmin):
     list_display = ("parque", "dia", "hora_abertura", "hora_fechamento")
     list_filter = ("dia", "parque")
     ordering = ("parque", "dia")
-
-
