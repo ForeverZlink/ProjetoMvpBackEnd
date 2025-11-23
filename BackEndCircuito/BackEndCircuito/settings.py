@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'parques',
     'trilhas',
-    'eventos'
+    'eventos',
+    'rest_framework',
+    'drf_spectacular',
+    'drf_spectacular_sidecar'
 ]
 
 MIDDLEWARE = [
@@ -82,6 +85,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
 
 # Password validation
@@ -101,6 +107,20 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'API Parques - Circuito Verde',
+    'DESCRIPTION': 'Documentação oficial da API do projeto Circuito Verde.\n\n'
+                   'Endpoints públicos para consulta de Parques.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+
+    # melhora o visual do swagger
+    'SWAGGER_UI_SETTINGS': {
+        'filter': True,     # barra de busca
+        'deepLinking': True,
+        'defaultModelsExpandDepth': -1,   # esconde modelos
+    },
+}
 
 
 # Internationalization
