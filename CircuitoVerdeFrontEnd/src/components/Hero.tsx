@@ -102,35 +102,6 @@ export function Hero({ onNavigate }: HeroProps) {
               tags={["Trilhas", "Reforma", "Natureza"]}
             />
 
-            <NewsCard
-              date="10/11/2025"
-              title="Nova Área de Picnic Inaugurada"
-              park="Bosque Horizonte"
-              description="Espaço amplo, com sombra natural e mesas rústicas. Perfeito para famílias e ciclistas."
-              tags={["Picnic", "Família"]}
-            />
-
-            <NewsCard
-              date="03/11/2025"
-              title="Festival Cultural Anunciado"
-              park="Parque Aurora"
-              description="Evento anual com música local, artesanato e gastronomia tradicional. Entrada gratuita."
-              tags={["Cultura", "Evento", "Gastronomia"]}
-            />
-                <NewsCard
-              date="03/11/2025"
-              title="Festival Cultural Anunciado"
-              park="Parque Aurora"
-              description="Evento anual com música local, artesanato e gastronomia tradicional. Entrada gratuita."
-              tags={["Cultura", "Evento", "Gastronomia"]}
-            />
-                <NewsCard
-              date="03/11/2025"
-              title="Festival Cultural Anunciado"
-              park="Parque Aurora"
-              description="Evento anual com música local, artesanato e gastronomia tradicional. Entrada gratuita."
-              tags={["Cultura", "Evento", "Gastronomia"]}
-            />
 
           </div>
 
