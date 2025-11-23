@@ -14,6 +14,10 @@ class Novidades(models.Model):
         related_name='novidades',
         verbose_name="Parque"
     )
+    data_criacao = models.DateTimeField(auto_now_add=True, verbose_name="Data de criação")
+
+    # ✔ Publicado em (manual — mais flexível para sites)
+    data_publicacao = models.DateField(verbose_name="Data de publicação", null=True, blank=True)
 
     # ✔ Data em que a novidade foi criada
     data_criacao = models.DateTimeField(auto_now_add=True, verbose_name="Data de criação")
@@ -35,4 +39,5 @@ class Novidades(models.Model):
     def __str__(self):
         return self.titulo
 
+    ordering = ['-data_publicacao', '-data_criacao']
 

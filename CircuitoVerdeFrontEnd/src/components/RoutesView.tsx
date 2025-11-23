@@ -130,7 +130,28 @@ export function RoutesView() {
             ))}
           </div>
         </div>
+        <div className="bg-white rounded-2xl shadow-md p-6">
+          <div className="flex items-center space-x-2 mb-4">
+            <Filter className="h-5 w-5 text-gray-600" />
+            <h2 className="text-lg font-semibold text-gray-900">Filtro por Parque</h2>
+          </div>
 
+          <div className="flex flex-wrap gap-3">
+            {difficulties.map((difficulty) => (
+              <button
+                key={difficulty.id}
+                onClick={() => setSelectedDifficulty(difficulty.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  selectedDifficulty === difficulty.id
+                    ? `${difficulty.color} ring-2 ring-offset-2 ring-green-600`
+                    : difficulty.color
+                }`}
+              >
+                {difficulty.label}
+              </button>
+            ))}
+          </div>
+        </div>
         {filteredRoutes.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-gray-500 text-lg">Nenhuma rota encontrada com os filtros selecionados.</p>

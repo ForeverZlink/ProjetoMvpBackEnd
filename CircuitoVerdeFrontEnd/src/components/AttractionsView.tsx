@@ -75,6 +75,7 @@ export function AttractionsView() {
           <div className="flex items-center space-x-2 mb-4">
             <Filter className="h-5 w-5 text-gray-600" />
             <h2 className="text-lg font-semibold text-gray-900">Filtrar por Categoria</h2>
+            
           </div>
 
           <div className="flex flex-wrap gap-3">
@@ -92,6 +93,31 @@ export function AttractionsView() {
               </button>
             ))}
           </div>
+          
+        </div>
+        <div className="bg-white rounded-2xl shadow-md p-6 mb-8">
+          <div className="flex items-center space-x-2 mb-4">
+            <Filter className="h-5 w-5 text-gray-600" />
+            <h2 className="text-lg font-semibold text-gray-900">Filtrar por Parque</h2>
+            
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  selectedCategory === category.id
+                    ? `${category.color} ring-2 ring-offset-2 ring-green-600`
+                    : category.color
+                }`}
+              >
+                {category.label}
+              </button>
+            ))}
+          </div>
+          
         </div>
 
         {filteredAttractions.length === 0 ? (
