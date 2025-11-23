@@ -24,7 +24,7 @@ class ParqueViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ParqueSerializer
 
 @extend_schema(tags=['Parques'])
-class ParqueCompletoView(APIView):
+class ParqueDetailView(APIView):
     def get(self, request, pk):
         try:
             parque = Parque.objects.get(pk=pk)
@@ -76,7 +76,7 @@ class ParqueCompletoView(APIView):
         return Response(response)
     
 @extend_schema(tags=['Parques'])
-class ParqueCompletosAllView(APIView):
+class ParqueListView(APIView):
     def get(self, request):
 
         parques = Parque.objects.all()

@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from rest_framework import routers
 from django.urls import path, include
-from parques.views import ParqueCompletoView, ParqueViewSet,ParqueCompletosAllView
+from parques.views import ParqueDetailView, ParqueViewSet,ParqueListView
+from eventos.views import NovidadesListView,NovidadeDetailView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from parques.routers import parques_router
 
@@ -37,6 +38,8 @@ urlpatterns = [
 
     # API
     path('api/', include(parques_router.urls)),
-    path("api/parques/<int:pk>/completo/", ParqueCompletoView.as_view()),
-    path("api/parques/all/completo/", ParqueCompletosAllView.as_view()),
+    path("api/parques/<int:pk>/completo/", ParqueDetailView.as_view()),
+    path("api/parques/all/completo/", ParqueListView.as_view()),
+    path("api/novidades/<int:pk>/completo/", NovidadeDetailView.as_view()),
+    path("api/novidades/all/completo/", NovidadesListView.as_view()),
 ]

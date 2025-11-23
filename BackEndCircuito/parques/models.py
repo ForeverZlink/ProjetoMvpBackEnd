@@ -61,8 +61,8 @@ class HorarioFuncionamento(models.Model):
         'Parque',
         on_delete=models.CASCADE,
         related_name='horarios',
-        null=True,
-        blank=True
+        null=False,
+        blank=False
     )
 
     class Meta:
