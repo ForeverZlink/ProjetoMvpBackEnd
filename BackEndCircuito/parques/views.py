@@ -22,6 +22,7 @@ from drf_spectacular.utils import extend_schema, extend_schema_view
 class ParqueViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Parque.objects.all()
     serializer_class = ParqueSerializer
+
 @extend_schema(tags=['Parques'])
 class ParqueCompletoView(APIView):
     def get(self, request, pk):
@@ -73,3 +74,49 @@ class ParqueCompletoView(APIView):
         }
 
         return Response(response)
+    
+@extend_schema(tags=['Parques'])
+class ParqueCompletosAllView(APIView):
+    def get(self, request):
+
+        parques = Parque.objects.all()
+
+        resultado = []
+
+        for parque in parques:
+
+            # Endereço
+            endereco = None
+            if parque.endereco:
+                endereco = {
+                    "cep": parque.endereco.cep,
+                    "logradouro": parque.endereco.logradouro,
+                    "bairro": parque.endereco.bairro,
+                    "cidade": parque.endereco.cidade,
+                    "estado": parque.endereco.estado,
+                }
+
+            # Horários
+            horarios = [
+                {
+                    "dia": h.get_dia_display(),
+                    "hora_abertura": h.hora_abertura.strftime("%H:%M"),
+                    "hora_fechamento": h.hora_fechamento.strftime("%H:%M"),
+                }
+                for h in parque.horarios.all()
+            ]
+
+            # Tags
+            tags = [t.nome_da_tag for t in parque.tag.all()]
+
+            resultado.append({
+                "id": parque.id,
+                "nome_do_parque": parque.nome_do_parque,
+                "descricao": parque.descricao,
+                "site": parque.site,
+                "endereco": endereco,
+                "horarios": horarios,
+                "tags": tags,
+            })
+
+        return Response(resultado)

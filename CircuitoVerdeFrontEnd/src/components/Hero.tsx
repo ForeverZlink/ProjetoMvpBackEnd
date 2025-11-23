@@ -1,10 +1,37 @@
 import { ArrowRight, Compass, Map, Mountain } from 'lucide-react';
+import { useEffect, useState } from "react";
 
 type HeroProps = {
   onNavigate: (view: string) => void;
 };
 
 export function Hero({ onNavigate }: HeroProps) {
+  const [novidades, setNovidades] = useState([]);
+  const [parques, setParques] = useState([]);
+
+  useEffect(() => {
+    async function carregarDados() {
+      try {
+        const resNovidades = await fetch("http://SEU_BACKEND/api/novidades/");
+        const dataNovidades = await resNovidades.json();
+        setNovidades(dataNovidades);
+
+
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+      }
+      try {
+        const resParques = await fetch("http://127.0.0.1:8000/api/parques/all/completo/");
+        const dataParques = await resParques.json();
+        setParques(dataParques);
+
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+      }
+    }
+
+    carregarDados();
+  }, []);
   return (
     <div className="relative bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 overflow-hidden">
       
@@ -59,55 +86,55 @@ export function Hero({ onNavigate }: HeroProps) {
             </button>
           </div>
         </div>
-{/* Novidades */}
-<div className="mt-24">
-  <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-12">
-    Novidades do Circuito Verde
-  </h2>
+        {/* Novidades */}
+        <div className="mt-24">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-12">
+            Novidades do Circuito Verde
+          </h2>
 
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
 
-    <NewsCard
-      date="15/11/2025"
-      title="Trilha do Mirante Reformada"
-      park="Vale Sereno"
-      description="A trilha principal passou por melhorias, oferecendo mais segurança e novos mirantes para fotos incríveis."
-      tags={["Trilhas", "Reforma", "Natureza"]}
-    />
+            <NewsCard
+              date="15/11/2025"
+              title="Trilha do Mirante Reformada"
+              park="Vale Sereno"
+              description="A trilha principal passou por melhorias, oferecendo mais segurança e novos mirantes para fotos incríveis."
+              tags={["Trilhas", "Reforma", "Natureza"]}
+            />
 
-    <NewsCard
-      date="10/11/2025"
-      title="Nova Área de Picnic Inaugurada"
-      park="Bosque Horizonte"
-      description="Espaço amplo, com sombra natural e mesas rústicas. Perfeito para famílias e ciclistas."
-      tags={["Picnic", "Família"]}
-    />
+            <NewsCard
+              date="10/11/2025"
+              title="Nova Área de Picnic Inaugurada"
+              park="Bosque Horizonte"
+              description="Espaço amplo, com sombra natural e mesas rústicas. Perfeito para famílias e ciclistas."
+              tags={["Picnic", "Família"]}
+            />
 
-    <NewsCard
-      date="03/11/2025"
-      title="Festival Cultural Anunciado"
-      park="Parque Aurora"
-      description="Evento anual com música local, artesanato e gastronomia tradicional. Entrada gratuita."
-      tags={["Cultura", "Evento", "Gastronomia"]}
-    />
-        <NewsCard
-      date="03/11/2025"
-      title="Festival Cultural Anunciado"
-      park="Parque Aurora"
-      description="Evento anual com música local, artesanato e gastronomia tradicional. Entrada gratuita."
-      tags={["Cultura", "Evento", "Gastronomia"]}
-    />
-        <NewsCard
-      date="03/11/2025"
-      title="Festival Cultural Anunciado"
-      park="Parque Aurora"
-      description="Evento anual com música local, artesanato e gastronomia tradicional. Entrada gratuita."
-      tags={["Cultura", "Evento", "Gastronomia"]}
-    />
+            <NewsCard
+              date="03/11/2025"
+              title="Festival Cultural Anunciado"
+              park="Parque Aurora"
+              description="Evento anual com música local, artesanato e gastronomia tradicional. Entrada gratuita."
+              tags={["Cultura", "Evento", "Gastronomia"]}
+            />
+                <NewsCard
+              date="03/11/2025"
+              title="Festival Cultural Anunciado"
+              park="Parque Aurora"
+              description="Evento anual com música local, artesanato e gastronomia tradicional. Entrada gratuita."
+              tags={["Cultura", "Evento", "Gastronomia"]}
+            />
+                <NewsCard
+              date="03/11/2025"
+              title="Festival Cultural Anunciado"
+              park="Parque Aurora"
+              description="Evento anual com música local, artesanato e gastronomia tradicional. Entrada gratuita."
+              tags={["Cultura", "Evento", "Gastronomia"]}
+            />
 
-  </div>
+          </div>
 
-</div>
+        </div>
 
         {/* Parques em Destaque */}
         <div className="mt-24">
@@ -115,33 +142,19 @@ export function Hero({ onNavigate }: HeroProps) {
             Parques em Destaque
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {parques.map((p) => (
             <ParkCard
-              title="Parque Aurora"
-              description="Trilhas leves e áreas de descanso ideais para famílias."
-              address="Rua das Flores, 120 - Serra Alta"
-              hours="Todos os dias, 07h às 18h"
-              tags={["Família", "Trilha Leve", "Natureza"]}
+              key={p.id}
+              title={p.nome_do_parque}
+              description={p.descricao}
+              address={p.endereco?.logradouro + ", " + p.endereco?.bairro}
+              hours={p.horarios?.map(h => `${h.dia}: ${h.hora_abertura} - ${h.hora_fechamento}`).join(" | ") || "Não informado"}
+              tags={p.tag?.map(t => t.nome_da_tag) || []}
             />
+          ))}
+        </div>
 
-            <ParkCard
-              title="Vale Sereno"
-              description="Cachoeiras e mirantes perfeitos para contemplação."
-              address="Estrada do Mirante, KM 8"
-              hours="Terça a Domingo, 08h às 17h"
-              tags={["Cachoeira", "Mirantes", "Fotografia"]}
-            />
-
-            <ParkCard
-              title="Bosque Horizonte"
-              description="Rotas de ciclismo e áreas para picnic ao ar livre."
-              address="Av. Horizonte Verde, 980"
-              hours="Todos os dias, 06h às 20h"
-              tags={["Ciclismo", "Picnic", "Aventura"]}
-            />
-
-          </div>
 
         </div>
 

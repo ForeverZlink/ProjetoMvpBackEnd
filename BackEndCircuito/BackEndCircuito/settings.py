@@ -51,10 +51,12 @@ INSTALLED_APPS = [
     'eventos',
     'rest_framework',
     'drf_spectacular',
-    'drf_spectacular_sidecar'
+    'drf_spectacular_sidecar',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -145,6 +147,7 @@ LANGUAGE_CODE = 'en-us'
 
 
 USE_I18N = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 USE_TZ = True
 TIME_ZONE = "America/Sao_Paulo"
