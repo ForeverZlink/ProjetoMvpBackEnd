@@ -41,7 +41,7 @@ class Novidades(models.Model):
 
     ordering = ['-data_publicacao', '-data_criacao']
 
-class Tag(models.Model):
+class TagNovidades(models.Model):
     nome_da_tag = models.CharField(max_length=300, verbose_name="Tag")
     novidade = models.ForeignKey(
         'Novidades',

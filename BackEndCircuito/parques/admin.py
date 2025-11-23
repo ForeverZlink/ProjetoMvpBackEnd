@@ -31,11 +31,6 @@ class EnderecoAdmin(admin.ModelAdmin):
     search_fields = ("cep", "logradouro", "bairro", "cidade")
     list_filter = ("estado",)
 
-@admin.register(Tag)
-class Tag(admin.ModelAdmin):
-    list_display = ("nome_da_tag","parque")
-    search_fields = ("nome_da_tag","parque")
-    list_filter = ("nome_da_tag","parque")
 
 
 @admin.register(HorarioFuncionamento)

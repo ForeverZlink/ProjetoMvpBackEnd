@@ -12,14 +12,13 @@ export function Hero({ onNavigate }: HeroProps) {
   useEffect(() => {
     async function carregarDados() {
       try {
-        const resNovidades = await fetch("http://SEU_BACKEND/api/novidades/");
+        const resNovidades = await fetch("http://127.0.0.1:8000/api/novidades/all/completo");
         const dataNovidades = await resNovidades.json();
         setNovidades(dataNovidades);
-
-
       } catch (error) {
-        console.error("Erro ao carregar dados:", error);
+        console.error("Erro ao carregar novidades:", error);
       }
+
       try {
         const resParques = await fetch("http://127.0.0.1:8000/api/parques/all/completo/");
         const dataParques = await resParques.json();
@@ -93,17 +92,18 @@ export function Hero({ onNavigate }: HeroProps) {
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-
-            <NewsCard
-              date="15/11/2025"
-              title="Trilha do Mirante Reformada"
-              park="Vale Sereno"
-              description="A trilha principal passou por melhorias, oferecendo mais segurança e novos mirantes para fotos incríveis."
-              tags={["Trilhas", "Reforma", "Natureza"]}
-            />
-
-
+            {novidades.map((n) => (
+              <NewsCard
+                key={n.id}
+                date={n.data_publicacao || "Não publicado"}
+                title={n.titulo}
+                park={n.parque?.nome_do_parque || "Não informado"}
+                description={n.descricao}
+                tags={n.tag_novidades?.map((t) => t.nome_da_tag) || []}
+              />
+            ))}
           </div>
+
 
         </div>
 
@@ -191,12 +191,14 @@ export function ParkCard({ title, description, address, hours, tags }: ParkCardP
   );
 }
 export function NewsCard({ date, title, park, description, tags = [] }: NewsCardProps) {
+  const dataFormatada = date ? new Date(date).toLocaleDateString('pt-BR') : "Não publicado";
+
   return (
     <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all">
       
       {/* Data */}
       <p className="text-xs text-gray-500 font-medium mb-2">
-        {date}
+        Data de publicação:{dataFormatada}
       </p>
 
       {/* Título */}

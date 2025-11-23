@@ -1,9 +1,12 @@
 from django.contrib import admin
-from eventos.models import Novidades
+from eventos.models import Novidades,TagNovidades
 
 
 class NovidadesModelInline(admin.TabularInline):
     model = Novidades
+    extra = 1
+class TagNovidadesInline(admin.TabularInline):
+    model = TagNovidades
     extra = 1
 
 
@@ -14,6 +17,6 @@ class NovidadesAdmin(admin.ModelAdmin):
     ordering = ("titulo",)
     list_filter = ("ativo", "parque", "vigencia_inicio", "vigencia_fim")
     list_editable = ("ativo",)
-
+    inlines = [TagNovidadesInline]
 
 
