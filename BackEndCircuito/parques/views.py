@@ -107,7 +107,7 @@ class ParqueListView(APIView):
             ]
 
             # Tags
-            tags = [t.nome_da_tag for t in parque.tag.all()]
+            tags = [t.nome_da_tag for t in parque.tags.all()]
 
             resultado.append({
                 "id": parque.id,

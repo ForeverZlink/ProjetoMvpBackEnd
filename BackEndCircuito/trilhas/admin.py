@@ -1,6 +1,10 @@
 from django.contrib import admin
-from .models import Trilha
+from .models import Trilha,TagTrilha
 
+@admin.register(TagTrilha)
+class TagTrilhaAdmin(admin.ModelAdmin):
+    list_display = ("nome_da_tag",)
+    search_fields = ("nome_da_tag",)
 
 @admin.register(Trilha)
 class TrilhaAdmin(admin.ModelAdmin):

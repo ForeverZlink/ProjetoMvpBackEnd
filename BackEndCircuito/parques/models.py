@@ -77,15 +77,9 @@ class HorarioFuncionamento(models.Model):
 # ------------------------------
 # 🏞️ Parque
 # ------------------------------
-class Tag(models.Model):
-    nome_da_tag = models.CharField(max_length=300, verbose_name="Tag")
-    parque = models.ForeignKey(
-        'Parque',
-        on_delete=models.CASCADE,
-        related_name='tag',
-        null=True,
-        blank=True
-    )
+class TagParque(models.Model):
+    nome_da_tag = models.CharField(max_length=300, blank=False, verbose_name="Tag")
+
     def __str__(self):
         return self.nome_da_tag
     
@@ -98,7 +92,8 @@ class Parque(models.Model):
         on_delete=models.CASCADE,
         related_name='parque'
     )
-
+    
+    tags = models.ManyToManyField(TagParque, related_name='parques', blank=True)
     class Meta:
         verbose_name = "Parque"
         verbose_name_plural = "Parques"

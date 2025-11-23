@@ -5,14 +5,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema
-from .models import Novidades
+from .models import Novidade
 
 @extend_schema(tags=['Novidades'])
 class NovidadeDetailView(APIView):
     def get(self, request, pk):
         try:
-            n = Novidades.objects.get(pk=pk)
-        except Novidades.DoesNotExist:
+            n = Novidade.objects.get(pk=pk)
+        except Novidade.DoesNotExist:
             return Response({"detail": "Novidade não encontrada"}, status=status.HTTP_404_NOT_FOUND)
 
         response = {
@@ -35,7 +35,7 @@ class NovidadeDetailView(APIView):
 @extend_schema(tags=['Novidades'])
 class NovidadesListView(APIView):
     def get(self, request):
-        novidades = Novidades.objects.filter(ativo=True).order_by('-data_publicacao', '-data_criacao')
+        novidades = Novidade.objects.filter(ativo=True).order_by('-data_publicacao', '-data_criacao')
         response = []
 
         for n in novidades:

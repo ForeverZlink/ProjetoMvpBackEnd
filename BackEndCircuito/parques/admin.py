@@ -1,21 +1,21 @@
 from django.contrib import admin
-from .models import Endereco, HorarioFuncionamento, Parque,Tag
+from .models import Endereco, HorarioFuncionamento, Parque,TagParque
 
 
 # Exibição de horários diretamente dentro do parque
 class HorarioFuncionamentoInline(admin.TabularInline):
     model = HorarioFuncionamento
     extra = 1
-class TagInline(admin.TabularInline):
-    model = Tag
-    extra = 1
-
+@admin.register(TagParque)
+class TagParqueAdmin(admin.ModelAdmin):
+    list_display = ("nome_da_tag",)
+    search_fields = ("nome_da_tag",)
 
 @admin.register(Parque)
 class ParqueAdmin(admin.ModelAdmin):
     list_display = ("nome_do_parque", "descricao", "site", "get_endereco_resumido")
     search_fields = ("nome_do_parque", "descricao")
-    inlines = [HorarioFuncionamentoInline,TagInline]
+    inlines = [HorarioFuncionamentoInline]
 
     def get_endereco_resumido(self, obj):
         """Exibe o endereço de forma resumida na lista."""
